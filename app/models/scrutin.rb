@@ -1,0 +1,2 @@
+class Scrutin < ApplicationRecord
+end

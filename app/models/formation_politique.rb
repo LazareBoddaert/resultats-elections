@@ -1,0 +1,2 @@
+class FormationPolitique < ApplicationRecord
+end
