@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_21_145551) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_101642) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.integer "formation_politique_id", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_145551) do
 
   create_table "departements", force: :cascade do |t|
     t.string "nom"
-    t.integer "numero"
+    t.string "numero"
     t.integer "region_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -63,12 +63,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_21_145551) do
   create_table "scrutins", force: :cascade do |t|
     t.integer "annee"
     t.integer "tour"
-    t.integer "nombre_inscrit"
-    t.integer "abstention"
-    t.integer "nombre_votant"
-    t.integer "blancs"
-    t.integer "nuls"
-    t.integer "nombre_exprime"
+    t.float "nombre_inscrit"
+    t.float "abstention"
+    t.float "nombre_votant"
+    t.float "blancs"
+    t.float "nuls"
+    t.float "nombre_exprime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

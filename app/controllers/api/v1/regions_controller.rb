@@ -1,4 +1,5 @@
 class Api::V1::RegionsController < ApplicationController
+
   def index
     @regions = Region.all
     render json: @regions, status: 200
@@ -6,6 +7,7 @@ class Api::V1::RegionsController < ApplicationController
 
   def show
     @region = Region.find(params[:id])
+    render json: @region, status: 200
   end
 
   def create
