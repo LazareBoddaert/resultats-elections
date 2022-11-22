@@ -6,6 +6,7 @@ class Api::V1::ResultatsController < ApplicationController
 
   def show
     @resultat = Resultat.find(params[:id])
+    render json: @resultat, status: 200
   end
 
   def create

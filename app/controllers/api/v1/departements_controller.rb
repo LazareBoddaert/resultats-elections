@@ -6,6 +6,7 @@ class Api::V1::DepartementsController < ApplicationController
 
   def show
     @departement = Departement.find(params[:id])
+    render json: @departement, status: 200
   end
 
   def create

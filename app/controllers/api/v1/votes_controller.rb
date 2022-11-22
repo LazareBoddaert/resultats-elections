@@ -6,6 +6,7 @@ class Api::V1::VotesController < ApplicationController
 
   def show
     @vote = Vote.find(params[:id])
+    render json: @vote, status: 200
   end
 
   def create

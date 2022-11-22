@@ -6,6 +6,7 @@ class Api::V1::ScrutinsController < ApplicationController
 
   def show
     @scrutin = Scrutin.find(params[:id])
+    render json: @scrutin, status: 200
   end
 
   def create

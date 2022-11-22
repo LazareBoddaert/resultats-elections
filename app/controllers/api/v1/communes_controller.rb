@@ -6,6 +6,7 @@ class Api::V1::CommunesController < ApplicationController
 
   def show
     @commune = Commune.find(params[:id])
+    render json: @commune, status: 200
   end
 
   def create

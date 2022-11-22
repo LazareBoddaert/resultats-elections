@@ -6,6 +6,7 @@ class Api::V1::CandidatsController < ApplicationController
 
   def show
     @candidat = Candidat.find(params[:id])
+    render json: @candidat, status: 200
   end
 
   def create

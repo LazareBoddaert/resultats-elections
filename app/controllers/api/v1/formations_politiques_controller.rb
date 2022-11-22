@@ -6,6 +6,7 @@ class Api::V1::FormationsPolitiquesController < ApplicationController
 
   def show
     @formation_politique = FormationPolitique.find(params[:id])
+    render json: @formations_politique, status: 200
   end
 
   def create
