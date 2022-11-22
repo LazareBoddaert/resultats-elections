@@ -697,7 +697,118 @@ Candidat.create([
   }
 ])
 
-# puts "creating scrutins"
-# Scrutin.create([
+puts "creating scrutins"
+Scrutin.create([
+  #1
+  {
+    type: "présidentielle",
+    annee: 2022,
+    tour: 1,
+    nombre_inscrit: 48_747_876,
+    abstention: 12_824_169,
+    nombre_votant: 35_923_707,
+    blancs: 543_609,
+    nuls: 247_151,
+    nombre_exprime: 35_132_947
+  },
+  #2
+  {
+    type: "présidentielle",
+    annee: 2022,
+    tour: 2,
+    nombre_inscrit: 48_752_339,
+    abstention: 13_655_861,
+    nombre_votant: 35_096_478,
+    blancs: 2_233_904,
+    nuls: 805_249,
+    nombre_exprime: 32_057_325
+  }
+])
 
-# ])
+puts 'creating résultats'
+Resultat.create([
+  {
+    score_du_candidat_pourcentage: 58.55,
+    score_du_candidat_voix: 18_768_639,
+    scrutin_id: 2,
+    candidat_id: 3
+  },
+  {
+    score_du_candidat_pourcentage: 41.45,
+    score_du_candidat_voix: 13_288_686,
+    scrutin_id: 2,
+    candidat_id: 5
+  },
+  {
+    score_du_candidat_pourcentage: 0.56,
+    score_du_candidat_voix: 197_094,
+    scrutin_id: 1,
+    candidat_id: 1
+  },
+  {
+    score_du_candidat_pourcentage: 2.28,
+    score_du_candidat_voix: 802_422,
+    scrutin_id: 1,
+    candidat_id: 2
+  },
+  {
+    score_du_candidat_pourcentage: 27.85,
+    score_du_candidat_voix: 9_783_058,
+    scrutin_id: 1,
+    candidat_id: 3
+  },
+  {
+    score_du_candidat_pourcentage: 3.13,
+    score_du_candidat_voix: 1_101_387,
+    scrutin_id: 1,
+    candidat_id: 4
+  },
+  {
+    score_du_candidat_pourcentage: 23.15,
+    score_du_candidat_voix: 8_133_828,
+    scrutin_id: 1,
+    candidat_id: 5
+  },
+  {
+    score_du_candidat_pourcentage: 7.07,
+    score_du_candidat_voix: 2_485_226,
+    scrutin_id: 1,
+    candidat_id: 6
+  },
+  {
+    score_du_candidat_pourcentage: 21.95,
+    score_du_candidat_voix: 7_712_520,
+    scrutin_id: 1,
+    candidat_id: 7
+  },
+  {
+    score_du_candidat_pourcentage: 1.75,
+    score_du_candidat_voix: 616_478,
+    scrutin_id: 1,
+    candidat_id: 8
+  },
+  {
+    score_du_candidat_pourcentage: 4.63,
+    score_du_candidat_voix: 1_627_853,
+    scrutin_id: 1,
+    candidat_id: 9
+  },
+  {
+    score_du_candidat_pourcentage: 4.78,
+    score_du_candidat_voix: 1_679_001,
+    scrutin_id: 1,
+    candidat_id: 10
+  },
+  {
+    score_du_candidat_pourcentage: 0.77,
+    score_du_candidat_voix: 268_904,
+    scrutin_id: 1,
+    candidat_id: 11
+  },
+  {
+    score_du_candidat_pourcentage: 2.06,
+    score_du_candidat_voix: 725_176,
+    scrutin_id: 1,
+    candidat_id: 12
+  },
+])

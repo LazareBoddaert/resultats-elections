@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_22_101642) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_22_145531) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.integer "formation_politique_id", null: false
@@ -51,11 +51,12 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_101642) do
   end
 
   create_table "resultats", force: :cascade do |t|
-    t.float "score_du_candidat"
+    t.float "score_du_candidat_pourcentage"
     t.integer "scrutin_id", null: false
     t.integer "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score_du_candidat_voix"
     t.index ["candidat_id"], name: "index_resultats_on_candidat_id"
     t.index ["scrutin_id"], name: "index_resultats_on_scrutin_id"
   end
@@ -63,14 +64,15 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_101642) do
   create_table "scrutins", force: :cascade do |t|
     t.integer "annee"
     t.integer "tour"
-    t.float "nombre_inscrit"
-    t.float "abstention"
-    t.float "nombre_votant"
-    t.float "blancs"
-    t.float "nuls"
-    t.float "nombre_exprime"
+    t.integer "nombre_inscrit"
+    t.integer "abstention"
+    t.integer "nombre_votant"
+    t.integer "blancs"
+    t.integer "nuls"
+    t.integer "nombre_exprime"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "type"
   end
 
   create_table "votes", force: :cascade do |t|
