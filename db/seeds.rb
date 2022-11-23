@@ -701,27 +701,43 @@ puts "creating scrutins"
 Scrutin.create([
   #1
   {
-    type: "présidentielle",
+    mandat: "présidentielle",
     annee: 2022,
     tour: 1,
-    nombre_inscrit: 48_747_876,
-    abstention: 12_824_169,
-    nombre_votant: 35_923_707,
-    blancs: 543_609,
-    nuls: 247_151,
-    nombre_exprime: 35_132_947
+    inscrit_voix: 48_747_876,
+    abstention_voix: 12_824_169,
+    abstention_pourcentage_inscrits: 26.31,
+    votant_voix: 35_923_707,
+    votant_pourcentage_inscrits: 73.69,
+    blancs_voix: 543_609,
+    blancs_pourcentage_inscrits: 1.12,
+    blancs_pourcentage_votants: 1.51,
+    nuls_voix: 247_151,
+    nuls_pourcentage_inscrits: 0.51,
+    nuls_pourcentage_votants: 0.69,
+    exprime_voix: 35_132_947,
+    exprime_pourcentage_inscrits: 72.07,
+    exprime_pourcentage_votants: 97.80
   },
   #2
   {
-    type: "présidentielle",
+    mandat: "présidentielle",
     annee: 2022,
     tour: 2,
-    nombre_inscrit: 48_752_339,
-    abstention: 13_655_861,
-    nombre_votant: 35_096_478,
-    blancs: 2_233_904,
-    nuls: 805_249,
-    nombre_exprime: 32_057_325
+    inscrit_voix: 48_752_339,
+    abstention_voix: 13_655_861,
+    abstention_pourcentage_inscrits: 28.01,
+    votant_voix: 35_096_478,
+    votant_pourcentage_inscrits: 71.99,
+    blancs_voix: 2_233_904,
+    blancs_pourcentage_inscrits: 4.58,
+    blancs_pourcentage_votants: 6.37,
+    nuls_voix: 805_249,
+    nuls_pourcentage_inscrits: 1.65,
+    nuls_pourcentage_votants: 2.29,
+    exprime_voix: 32_057_325,
+    exprime_pourcentage_inscrits: 65.76,
+    exprime_pourcentage_votants: 91.34
   }
 ])
 

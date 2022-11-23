@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_22_145531) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_23_112613) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.integer "formation_politique_id", null: false
@@ -64,15 +64,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_22_145531) do
   create_table "scrutins", force: :cascade do |t|
     t.integer "annee"
     t.integer "tour"
-    t.integer "nombre_inscrit"
-    t.integer "abstention"
-    t.integer "nombre_votant"
-    t.integer "blancs"
-    t.integer "nuls"
-    t.integer "nombre_exprime"
+    t.integer "inscrit_voix"
+    t.integer "abstention_voix"
+    t.integer "votant_voix"
+    t.integer "blancs_voix"
+    t.integer "nuls_voix"
+    t.integer "exprime_voix"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "type"
+    t.string "mandat"
+    t.float "abstention_pourcentage_inscrits"
+    t.float "votant_pourcentage_inscrits"
+    t.float "blancs_pourcentage_inscrits"
+    t.float "blancs_pourcentage_votants"
+    t.float "nuls_pourcentage_inscrits"
+    t.float "nuls_pourcentage_votants"
+    t.float "exprime_pourcentage_inscrits"
+    t.float "exprime_pourcentage_votants"
   end
 
   create_table "votes", force: :cascade do |t|
