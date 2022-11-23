@@ -8,6 +8,8 @@
 
 # PENSER A FAIRE 'rails db:drop db:create db:migrate db:seed' pour mettre à jour la seed (pour les correspondances d'ID)
 
+puts "destroying nations"
+Nation.destroy_all
 puts "destroying régions"
 Region.destroy_all
 puts "destroying départements"
@@ -21,60 +23,86 @@ Candidat.destroy_all
 puts "destroying scrutins"
 Scrutin.destroy_all
 
+puts "creating nations"
+Nation.create([
+  {
+    nom: "France"
+  }
+])
+
+# # ------------- MANUAL SEED (without communes) -------------
 puts "creating regions"
 Region.create([
   {
+    nation_id: 1,
     nom: 'Auvergne-Rhône-Alpes' #1
   },
   {
+    nation_id: 1,
     nom: 'Bourgogne-Franche-Comté' #2
   },
   {
+    nation_id: 1,
     nom: 'Bretagne' #3
   },
   {
+    nation_id: 1,
     nom: 'Centre-Val de Loire' #4
   },
   {
+    nation_id: 1,
     nom: 'Corse' #5
   },
   {
+    nation_id: 1,
     nom: 'Grand Est' #6
   },
   {
+    nation_id: 1,
     nom: 'Hauts-de-France' #7
   },
   {
+    nation_id: 1,
     nom: 'Île-de-France' #8
   },
   {
+    nation_id: 1,
     nom: 'Normandie' #9
   },
   {
+    nation_id: 1,
     nom: 'Nouvelle-Aquitaine' #10
   },
   {
+    nation_id: 1,
     nom: 'Occitanie' #11
   },
   {
+    nation_id: 1,
     nom: 'Pays de la Loire' #12
   },
   {
+    nation_id: 1,
     nom: "Provence-Alpes-Côte d'Azur" #13
   },
   {
+    nation_id: 1,
     nom: 'Guadeloupe' #14
   },
   {
+    nation_id: 1,
     nom: 'Martinique' #15
   },
   {
+    nation_id: 1,
     nom: 'Guyane' #16
   },
   {
+    nation_id: 1,
     nom: 'La Réunion' #17
   },
   {
+    nation_id: 1,
     nom: 'Mayotte' #18
   }
 ])
@@ -826,5 +854,36 @@ Resultat.create([
     score_du_candidat_voix: 725_176,
     scrutin_id: 1,
     candidat_id: 12
-  },
+  }
 ])
+
+# ------------- SCRAPING SEED -------------
+
+# puts "creating regions"
+# Region.create([
+
+# ])
+
+# puts "creating départements"
+# Departement.create([
+# ])
+
+# # puts "creating communes"
+# # Commune.create([
+# # ])
+
+# puts "creating formations politiques"
+# FormationPolitique.create([
+# ])
+
+# puts "creating candidats"
+# Candidat.create([
+# ])
+
+# puts "creating scrutins"
+# Scrutin.create([
+# ])
+
+# puts 'creating résultats'
+# Resultat.create([
+# ])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_23_112613) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_23_132020) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.integer "formation_politique_id", null: false
@@ -44,10 +44,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_23_112613) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "nations", force: :cascade do |t|
+    t.string "nom"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "regions", force: :cascade do |t|
     t.string "nom"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "nation_id"
+    t.index ["nation_id"], name: "index_regions_on_nation_id"
   end
 
   create_table "resultats", force: :cascade do |t|

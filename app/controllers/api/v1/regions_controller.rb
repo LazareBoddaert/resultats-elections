@@ -19,6 +19,6 @@ class Api::V1::RegionsController < ApplicationController
   private
 
   def regions_params
-    params.require(:region).permit(:nom)
+    params.require(:region).permit(:nom, :nation_id)
   end
 end
