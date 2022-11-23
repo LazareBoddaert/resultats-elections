@@ -138,6 +138,10 @@ GEM
     rake (13.0.6)
     reline (0.3.1)
       io-console (~> 0.5)
+    rubyzip (2.3.2)
+    simple_xlsx_reader (2.0.0)
+      nokogiri
+      rubyzip
     sqlite3 (1.5.4-x86_64-darwin)
     thor (1.2.1)
     timeout (0.3.0)
@@ -156,6 +160,7 @@ DEPENDENCIES
   debug
   puma (~> 5.0)
   rails (~> 7.0.4)
+  simple_xlsx_reader
   sqlite3 (~> 1.4)
   tzinfo-data
 

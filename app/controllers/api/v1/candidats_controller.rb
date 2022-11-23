@@ -15,6 +15,12 @@ class Api::V1::CandidatsController < ApplicationController
     render json: @candidat, status: 200
   end
 
+  def update
+    @candidat = Candidat.find(params[:id])
+    @candidat.update(candidat_params)
+    render json: @candidat, status: 200
+  end
+
   private
 
   def candidats_params

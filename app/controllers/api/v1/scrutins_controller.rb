@@ -15,6 +15,12 @@ class Api::V1::ScrutinsController < ApplicationController
     render json: @scrutin, status: 200
   end
 
+  def update
+    @scrutin = Scrutin.find(params[:id])
+    @scrutin.update(scrutin_params)
+    render json: @scrutin, status: 200
+  end
+
   private
 
   def scrutins_params
