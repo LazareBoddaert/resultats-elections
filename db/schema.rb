@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_23_132020) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_24_003800) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
-    t.integer "formation_politique_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "formation_politique_id", default: 0, null: false
     t.index ["formation_politique_id"], name: "index_candidats_on_formation_politique_id"
   end
 
@@ -59,12 +59,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_23_132020) do
   end
 
   create_table "resultats", force: :cascade do |t|
-    t.float "score_du_candidat_pourcentage"
+    t.float "score_candidat_pourcentage_inscrits"
     t.integer "scrutin_id", null: false
     t.integer "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "score_du_candidat_voix"
+    t.float "score_candidat_pourcentage_exprimes"
     t.index ["candidat_id"], name: "index_resultats_on_candidat_id"
     t.index ["scrutin_id"], name: "index_resultats_on_scrutin_id"
   end
@@ -100,7 +101,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_23_132020) do
     t.index ["scrutin_id"], name: "index_votes_on_scrutin_id"
   end
 
-  add_foreign_key "candidats", "formation_politiques"
   add_foreign_key "communes", "departements"
   add_foreign_key "departements", "regions"
   add_foreign_key "resultats", "candidats"

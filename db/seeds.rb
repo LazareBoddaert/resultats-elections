@@ -622,109 +622,7 @@ Nation.create([
 
 # # ])
 
-puts "creating formations politiques"
-FormationPolitique.create([
-  {
-    nom: "Lutte ouvrière (LO)",
-    positionnement_politique: "Extrême gauche"
-  },
-  {
-    nom: "Parti communiste français (PCF)",
-    positionnement_politique: "Gauche"
-  },
-  {
-    nom: "La République en marche (LREM)",
-    positionnement_politique: "Centre"
-  },
-  {
-    nom: "Résistons (RES)",
-    positionnement_politique: "Divers"
-  },
-  {
-    nom: "Rassemblement national (RN)",
-    positionnement_politique: "Extrême droite"
-  },
-  {
-    nom: "Reconquête (REC)",
-    positionnement_politique: "Extrême droite"
-  },
-  {
-    nom: "La France insoumise (LFI)",
-    positionnement_politique: "Gauche"
-  },
-  {
-    nom: "Parti socialiste (PS)",
-    positionnement_politique: "Gauche"
-  },
-  {
-    nom: "Europe Écologie Les Verts (EELV)",
-    positionnement_politique: "Gauche"
-  },
-  {
-    nom: "Les Républicains (LR)",
-    positionnement_politique: "Droite"
-  },
-  {
-    nom: "Nouveau Parti anticapitaliste (NPA)",
-    positionnement_politique: "Extrême gauche"
-  },
-  {
-    nom: "Debout la France (DLF)",
-    positionnement_politique: "Extrême droite"
-  }
-])
-
-puts "creating candidats"
-Candidat.create([
-  {
-    nom: "Nathalie Arthaud",
-    formation_politique_id: 1
-  },
-  {
-    nom: "Fabien Roussel",
-    formation_politique_id: 2
-  },
-  {
-    nom: "Emmanuel Macron",
-    formation_politique_id: 3
-  },
-  {
-    nom: "Jean Lassalle",
-    formation_politique_id: 4
-  },
-  {
-    nom: "Marine Le Pen",
-    formation_politique_id: 5
-  },
-  {
-    nom: "Éric Zemmour",
-    formation_politique_id: 6
-  },
-  {
-    nom: "Jean-Luc Mélenchon",
-    formation_politique_id: 7
-  },
-  {
-    nom: "Anne Hidalgo",
-    formation_politique_id: 8
-  },
-  {
-    nom: "Yannick Jadot",
-    formation_politique_id: 9
-  },
-  {
-    nom: "Valérie Pécresse",
-    formation_politique_id: 10
-  },
-  {
-    nom: "Philippe Poutou",
-    formation_politique_id: 11
-  },
-  {
-    nom: "Nicolas Dupont-Aignan",
-    formation_politique_id: 12
-  }
-])
+#
 
 # puts "creating scrutins"
 # Scrutin.create([
@@ -870,65 +768,78 @@ require 'simple_xlsx_reader'
 # ------- RESULTATS PRESIDENTIELLE 2022 FRANCE -------
 resultats_brut = SimpleXlsxReader.open './data/presidentielles/2022/t1/resultats-france-entiere.xlsx'
 
-presidentielle_2022 = Scrutin.new(annee: 2022, tour: 1, mandat: "présidentielle")
+P "Creating Scrutin"
+scrutin = Scrutin.create!(annee: 2022, tour: 1, mandat: "présidentielle")
 
-row_count = 0
-col_count = 0
-count = 0
+@row_count = 0
+@col_count = 0
+@count = 0
 resultats_brut.sheets.first.rows.each do |row|
-  row_count += 1
-  next if row_count == 1
+  @row_count += 1
+  next if @row_count == 1
 
   row.each do |cell|
-    col_count += 1
+    p cell
+    @col_count += 1
 
     # Récupère les données générales du vote
-    case col_count
+    case @col_count
     when 4
-      presidentielle_2022.update(inscrit_voix: cell)
+      scrutin.update(inscrit_voix: cell)
     when 5
-      presidentielle_2022.update(abstention_voix: cell)
+      scrutin.update(abstention_voix: cell)
     when 6
-      presidentielle_2022.update(abstention_pourcentage_inscrits: cell)
+      scrutin.update(abstention_pourcentage_inscrits: cell)
     when 7
-      presidentielle_2022.update(votant_voix: cell)
+      scrutin.update(votant_voix: cell)
     when 8
-      presidentielle_2022.update(votant_pourcentage_inscrits: cell)
+      scrutin.update(votant_pourcentage_inscrits: cell)
     when 9
-      presidentielle_2022.update(blancs_voix: cell)
+      scrutin.update(blancs_voix: cell)
     when 10
-      presidentielle_2022.update(blancs_pourcentage_inscrits: cell)
+      scrutin.update(blancs_pourcentage_inscrits: cell)
     when 11
-      presidentielle_2022.update(blancs_pourcentage_votants: cell)
+      scrutin.update(blancs_pourcentage_votants: cell)
     when 12
-      presidentielle_2022.update(nuls_voix: cell)
+      scrutin.update(nuls_voix: cell)
     when 13
-      presidentielle_2022.update(nuls_pourcentage_inscrits: cell)
+      scrutin.update(nuls_pourcentage_inscrits: cell)
     when 14
-      presidentielle_2022.update(nuls_pourcentage_votants: cell)
+      scrutin.update(nuls_pourcentage_votants: cell)
     when 15
-      presidentielle_2022.update(exprime_voix: cell)
+      scrutin.update(exprime_voix: cell)
     when 16
-      presidentielle_2022.update(exprime_pourcentage_inscrits: cell)
+      scrutin.update(exprime_pourcentage_inscrits: cell)
     when 17
-      presidentielle_2022.update(exprime_pourcentage_votants: cell)
+      scrutin.update(exprime_pourcentage_votants: cell)
     end
 
     # Récupère les scores des candidats
-
-    if col_count > 17
-      count += 1
-      case count
-      when 1
-        scrutin_id = presidentielle_2022.id
-        candidat = Resultat.new(scrutin_id: scrutin_id)
-        nom_candidat = cell.capitalize
-      when 2
-        nom_complet_candidat = "#{cell.capitalize} #{nom_candidat}"
-        candidat_id = Candidat.find_by(nom: nom_complet_candidat).id
-        candidat.update(candidat_id: candidat_id)
+    if @col_count > 17
+      @count += 1
+      case @count
       when 3
-        candidat.update()
+        @nom_candidat = cell.capitalize
+      when 4
+        nom_complet_candidat = "#{cell.capitalize} #{@nom_candidat}"
+        unless Candidat.find_by(nom: nom_complet_candidat)
+          p "Creating Candidat"
+          Candidat.create!(nom: nom_complet_candidat)
+        end
+        @scrutin_id = scrutin.id
+        @candidat = Candidat.find_by(nom: nom_complet_candidat)
+        @candidat_id = @candidat.id
+        p "Creating Resultat"
+        Resultat.create!(scrutin_id: @scrutin_id, candidat_id: @candidat_id)
+        @resultat_candidat = Resultat.last
+        @resultat_candidat.update(candidat_id: @candidat_id)
+      when 5
+        @resultat_candidat.update(score_du_candidat_voix: cell)
+      when 6
+        @resultat_candidat.update(score_candidat_pourcentage_inscrits: cell)
+      when 7
+        @resultat_candidat.update(score_candidat_pourcentage_exprimes: cell)
+        @count = 0
       end
     end
   end
