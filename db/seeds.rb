@@ -14,12 +14,12 @@ require 'benchmark'
 # Departement.destroy_all
 # puts "destroying communes"
 # Commune.destroy_all
-# puts "destroying formation politiques"
-# FormationPolitique.destroy_all
-# puts "destroying candidats"
-# Candidat.destroy_all
-# puts "destroying scrutins"
-# Scrutin.destroy_all
+puts "destroying formation politiques"
+FormationPolitique.destroy_all
+puts "destroying candidats"
+Candidat.destroy_all
+puts "destroying scrutins"
+Scrutin.destroy_all
 
 
 # ------------- TERRITOIRES  -------------
@@ -642,13 +642,11 @@ def recuperation_liste_communes(liste_communes_brut)
   end
 end
 
-liste_communes_brut = SimpleXlsxReader.open './data/liste_communes_par_departement.xlsx'
+liste_communes_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/liste_communes_par_departement.xlsx'
 
 # puts 'creating communes'
-# time = Benchmark.realtime do
-#   recuperation_liste_communes(liste_communes_brut)
-# end
-# puts "Temps creation communes: #{time}"
+# recuperation_liste_communes(liste_communes_brut)
+
 
 # puts "creating scrutins"
 # Scrutin.create([
@@ -861,15 +859,13 @@ end
 # ------- PRESIDENTIELLES -------
 # ------ 2022 ------
 # ----- T1 -----
-# ---- FRANCE ENTIERE ----
-resultats_brut = SimpleXlsxReader.open './data/presidentielles/2022/t1/presidentielle-2022-T1-france-entiere.xlsx'
+
+resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
 
 # puts 'Creating Scrutin'
 # scrutin = Scrutin.create!(annee: 2022, tour: 1, mandat: "présidentielle")
 
-# time = Benchmark.realtime do
-#   recuperation_donnees_resultats(resultats_brut, scrutin)
-# end
-# puts "temps creation scrutin pdt 2022 t1 france entière: #{time}"
+# recuperation_donnees_resultats(resultats_brut, scrutin)
 
-# ---- COMMUNES ----
+
+# ----- T2 -----
