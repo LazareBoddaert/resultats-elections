@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  inscrit_nombre: 1
+  abstention_nombre: 1
+  abstention_pourcentage_inscrit: 1.5
+  votant_nombre: 1
+  votant_pourcentage_inscrit: 1.5
+  blancs_nombre: 1
+  blancs_pourcentage_inscrit: 1.5
+  blancs_pourcentage_votant: 1.5
+  nuls_nombre: 1
+  nuls_pourcentage_inscrit: 1.5
+  nuls_pourcentage_votant: 1.5
+  blancs_nuls_nombre: 1
+  blancs_nuls_pourcentage_inscrit: 1.5
+  blancs_nuls_pourcentage_votant: 1.5
+  exprime_nombre: 1
+  exprime_pourcentage_inscrit: 1.5
+  exprime_pourcentage_inscrit: 1.5
+  scrutin: one
+  commune: one
+
+two:
+  inscrit_nombre: 1
+  abstention_nombre: 1
+  abstention_pourcentage_inscrit: 1.5
+  votant_nombre: 1
+  votant_pourcentage_inscrit: 1.5
+  blancs_nombre: 1
+  blancs_pourcentage_inscrit: 1.5
+  blancs_pourcentage_votant: 1.5
+  nuls_nombre: 1
+  nuls_pourcentage_inscrit: 1.5
+  nuls_pourcentage_votant: 1.5
+  blancs_nuls_nombre: 1
+  blancs_nuls_pourcentage_inscrit: 1.5
+  blancs_nuls_pourcentage_votant: 1.5
+  exprime_nombre: 1
+  exprime_pourcentage_inscrit: 1.5
+  exprime_pourcentage_inscrit: 1.5
+  scrutin: two
+  commune: two

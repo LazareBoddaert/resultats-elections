@@ -24,6 +24,6 @@ class Api::V1::ScrutinsController < ApplicationController
   private
 
   def scrutins_params
-    params.require(:scrutin).permit(:annee, :tour, :nombre_inscrit, :abstention, :nombre_votant, :blancs, :nuls, :nombre_exprime)
+    params.require(:scrutin).permit(:annee, :tour, :mandat)
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_003800) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_145701) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.datetime "created_at", null: false
@@ -58,53 +58,54 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_003800) do
     t.index ["nation_id"], name: "index_regions_on_nation_id"
   end
 
-  create_table "resultats", force: :cascade do |t|
-    t.float "score_candidat_pourcentage_inscrits"
+  create_table "resultat_candidats", force: :cascade do |t|
+    t.float "score_candidat"
     t.integer "scrutin_id", null: false
     t.integer "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "score_du_candidat_voix"
-    t.float "score_candidat_pourcentage_exprimes"
-    t.index ["candidat_id"], name: "index_resultats_on_candidat_id"
-    t.index ["scrutin_id"], name: "index_resultats_on_scrutin_id"
+    t.index ["candidat_id"], name: "index_resultat_candidats_on_candidat_id"
+    t.index ["scrutin_id"], name: "index_resultat_candidats_on_scrutin_id"
   end
 
-  create_table "scrutins", force: :cascade do |t|
-    t.integer "annee"
-    t.integer "tour"
-    t.integer "inscrit_voix"
-    t.integer "abstention_voix"
-    t.integer "votant_voix"
-    t.integer "blancs_voix"
-    t.integer "nuls_voix"
-    t.integer "exprime_voix"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "mandat"
-    t.float "abstention_pourcentage_inscrits"
-    t.float "votant_pourcentage_inscrits"
-    t.float "blancs_pourcentage_inscrits"
-    t.float "blancs_pourcentage_votants"
-    t.float "nuls_pourcentage_inscrits"
-    t.float "nuls_pourcentage_votants"
-    t.float "exprime_pourcentage_inscrits"
-    t.float "exprime_pourcentage_votants"
-  end
-
-  create_table "votes", force: :cascade do |t|
+  create_table "resultat_communes", force: :cascade do |t|
+    t.integer "inscrit_nombre"
+    t.integer "abstention_nombre"
+    t.float "abstention_pourcentage_inscrit"
+    t.integer "votant_nombre"
+    t.float "votant_pourcentage_inscrit"
+    t.integer "blancs_nombre"
+    t.float "blancs_pourcentage_inscrit"
+    t.float "blancs_pourcentage_votant"
+    t.integer "nuls_nombre"
+    t.float "nuls_pourcentage_inscrit"
+    t.float "nuls_pourcentage_votant"
+    t.integer "blancs_nuls_nombre"
+    t.float "blancs_nuls_pourcentage_inscrit"
+    t.float "blancs_nuls_pourcentage_votant"
+    t.integer "exprime_nombre"
+    t.float "exprime_pourcentage_inscrit"
+    t.float "exprime_pourcentage_votant"
     t.integer "scrutin_id", null: false
     t.integer "commune_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["commune_id"], name: "index_votes_on_commune_id"
-    t.index ["scrutin_id"], name: "index_votes_on_scrutin_id"
+    t.index ["commune_id"], name: "index_resultat_communes_on_commune_id"
+    t.index ["scrutin_id"], name: "index_resultat_communes_on_scrutin_id"
+  end
+
+  create_table "scrutins", force: :cascade do |t|
+    t.string "mandat"
+    t.integer "annee"
+    t.integer "tour"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "communes", "departements"
   add_foreign_key "departements", "regions"
-  add_foreign_key "resultats", "candidats"
-  add_foreign_key "resultats", "scrutins"
-  add_foreign_key "votes", "communes"
-  add_foreign_key "votes", "scrutins"
+  add_foreign_key "resultat_candidats", "candidats"
+  add_foreign_key "resultat_candidats", "scrutins"
+  add_foreign_key "resultat_communes", "communes"
+  add_foreign_key "resultat_communes", "scrutins"
 end

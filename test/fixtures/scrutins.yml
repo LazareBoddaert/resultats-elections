@@ -1,21 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  mandat: MyString
   annee: 1
   tour: 1
-  nombre_inscrit: 1
-  abstention: 1
-  nombre_votant: 1
-  blancs: 1
-  nuls: 1
-  nombre_exprime: 1
 
 two:
+  mandat: MyString
   annee: 1
   tour: 1
-  nombre_inscrit: 1
-  abstention: 1
-  nombre_votant: 1
-  blancs: 1
-  nuls: 1
-  nombre_exprime: 1

@@ -1,4 +1,4 @@
-class Resultat < ApplicationRecord
+class ResultatCandidat < ApplicationRecord
   belongs_to :scrutin
   belongs_to :candidat
 end
