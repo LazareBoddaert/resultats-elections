@@ -104,6 +104,10 @@ Region.create([
   {
     nation_id: 1,
     nom: 'Mayotte' #18
+  },
+  {
+    nation_id: 1,
+    nom: "Français de l'étranger" #19
   }
 ])
 
@@ -613,7 +617,12 @@ Departement.create([
     nom: "Mayotte",
     numero: "976",
     region_id: 18
-  }
+  },
+  {
+    nom: "Français établis hors de France",
+    numero: "ZZ",
+    region_id: 19
+  } #102
 ])
 
 
@@ -783,112 +792,112 @@ recuperation_liste_communes(liste_communes_brut)
 
 # ------------- ELECTIONS -------------
 
-def recuperation_donnees_resultats(resultats_brut)
-  @row_count = 0
-  @col_count = 0
-  @count = 0
-  resultats_brut.sheets.first.rows.each do |row|
-    @row_count += 1
+# def recuperation_donnees_resultats(resultats_brut)
+#   @row_count = 0
+#   @col_count = 0
+#   @count = 0
+#   resultats_brut.sheets.first.rows.each do |row|
+#     @row_count += 1
 
-    if @row_count == 1
-      # Récupère les infos générales sur le scrutin
-      row.each do |cell|
-        @col_count += 1
-        case @col_count
-        when 1
-          mandat_scrutin = cell
-        when 2
-          annee_scrutin = cell
-        when 3
-          tour_scrutin = cell
-          @col_count = 0
-          break
-        end
-        @scrutin = Scrutin.create!(annee: annee_scrutin, tour: tour_scrutin, mandat: mandat_scrutin)
-      end
-    elsif @row_count == 2
-      next
-    else
-      row.each do |cell|
-        @col_count += 1
+#     if @row_count == 1
+#       # Récupère les infos générales sur le scrutin
+#       row.each do |cell|
+#         @col_count += 1
+#         case @col_count
+#         when 1
+#           mandat_scrutin = cell
+#         when 2
+#           annee_scrutin = cell
+#         when 3
+#           tour_scrutin = cell
+#           @col_count = 0
+#           break
+#         end
+#         @scrutin = Scrutin.create!(annee: annee_scrutin, tour: tour_scrutin, mandat: mandat_scrutin)
+#       end
+#     elsif @row_count == 2
+#       next
+#     else
+#       row.each do |cell|
+#         @col_count += 1
 
-        # Récupère les données générales du vote
-        case @col_count
-        when 1
-          dep_commune = cell
-        when 2
-          
-        when 3
-          @scrutin.update(inscrit_voix: cell)
-        when 4
-          @scrutin.update(abstention_voix: cell)
-        when 5
-          @scrutin.update(abstention_pourcentage_inscrits: cell)
-        when 6
-          @scrutin.update(votant_voix: cell)
-        when 7
-          @scrutin.update(votant_pourcentage_inscrits: cell)
-        when 8
-          @scrutin.update(blancs_voix: cell)
-        when 9
-          @scrutin.update(blancs_pourcentage_inscrits: cell)
-        when 10
-          @scrutin.update(blancs_pourcentage_votants: cell)
-        when 11
-          @scrutin.update(nuls_voix: cell)
-        when 12
-          @scrutin.update(nuls_pourcentage_inscrits: cell)
-        when 13
-          @scrutin.update(nuls_pourcentage_votants: cell)
-        when 14
-          @scrutin.update(exprime_voix: cell)
-        when 15
-          @scrutin.update(exprime_pourcentage_inscrits: cell)
-        when 16
-          @scrutin.update(exprime_pourcentage_votants: cell)
-        end
+#         # Récupère les données générales du vote
+#         case @col_count
+#         when 1
+#           dep_commune = cell
+#         when 2
 
-        # Récupère les scores des candidats
-        if @col_count > 16
-          @count += 1
-          case @count
-          when 2
-            @nom_candidat = cell.capitalize
-          when 4
-            nom_complet_candidat = "#{cell.capitalize} #{@nom_candidat}"
-            unless Candidat.find_by(nom: nom_complet_candidat)
-              Candidat.create!(nom: nom_complet_candidat)
-            end
-            @scrutin_id = scrutin.id
-            @candidat = Candidat.find_by(nom: nom_complet_candidat)
-            @candidat_id = @candidat.id
-            Resultat.create!(scrutin_id: @scrutin_id, candidat_id: @candidat_id)
-            @resultat_candidat = Resultat.last
-            @resultat_candidat.update(candidat_id: @candidat_id)
-          when 5
-            @resultat_candidat.update(score_du_candidat_voix: cell)
-          when 6
-            @resultat_candidat.update(score_candidat_pourcentage_inscrits: cell)
-          when 7
-            @resultat_candidat.update(score_candidat_pourcentage_exprimes: cell)
-            @count = 0
-          end
-        end
-      end
-    end
-  end
-end
+#         when 3
+#           @scrutin.update(inscrit_voix: cell)
+#         when 4
+#           @scrutin.update(abstention_voix: cell)
+#         when 5
+#           @scrutin.update(abstention_pourcentage_inscrits: cell)
+#         when 6
+#           @scrutin.update(votant_voix: cell)
+#         when 7
+#           @scrutin.update(votant_pourcentage_inscrits: cell)
+#         when 8
+#           @scrutin.update(blancs_voix: cell)
+#         when 9
+#           @scrutin.update(blancs_pourcentage_inscrits: cell)
+#         when 10
+#           @scrutin.update(blancs_pourcentage_votants: cell)
+#         when 11
+#           @scrutin.update(nuls_voix: cell)
+#         when 12
+#           @scrutin.update(nuls_pourcentage_inscrits: cell)
+#         when 13
+#           @scrutin.update(nuls_pourcentage_votants: cell)
+#         when 14
+#           @scrutin.update(exprime_voix: cell)
+#         when 15
+#           @scrutin.update(exprime_pourcentage_inscrits: cell)
+#         when 16
+#           @scrutin.update(exprime_pourcentage_votants: cell)
+#         end
+
+#         # Récupère les scores des candidats
+#         if @col_count > 16
+#           @count += 1
+#           case @count
+#           when 2
+#             @nom_candidat = cell.capitalize
+#           when 4
+#             nom_complet_candidat = "#{cell.capitalize} #{@nom_candidat}"
+#             unless Candidat.find_by(nom: nom_complet_candidat)
+#               Candidat.create!(nom: nom_complet_candidat)
+#             end
+#             @scrutin_id = scrutin.id
+#             @candidat = Candidat.find_by(nom: nom_complet_candidat)
+#             @candidat_id = @candidat.id
+#             Resultat.create!(scrutin_id: @scrutin_id, candidat_id: @candidat_id)
+#             @resultat_candidat = Resultat.last
+#             @resultat_candidat.update(candidat_id: @candidat_id)
+#           when 5
+#             @resultat_candidat.update(score_du_candidat_voix: cell)
+#           when 6
+#             @resultat_candidat.update(score_candidat_pourcentage_inscrits: cell)
+#           when 7
+#             @resultat_candidat.update(score_candidat_pourcentage_exprimes: cell)
+#             @count = 0
+#           end
+#         end
+#       end
+#     end
+#   end
+# end
 
 # ------- PRESIDENTIELLES -------
 # ------ 2022 ------
 # ----- T1 -----
 
-resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
+# resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
 
-puts 'Creating Scrutin'
-scrutin = Scrutin.create!(annee: 2022, tour: 1, mandat: "présidentielle")
+# puts 'Creating Scrutin'
+# scrutin = Scrutin.create!(annee: 2022, tour: 1, mandat: "présidentielle")
 
-recuperation_donnees_resultats(resultats_brut, scrutin)
+# recuperation_donnees_resultats(resultats_brut, scrutin)
 
 
 # ----- T2 -----

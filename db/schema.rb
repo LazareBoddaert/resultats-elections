@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_145701) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_154845) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.datetime "created_at", null: false
@@ -21,7 +21,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_145701) do
 
   create_table "communes", force: :cascade do |t|
     t.string "nom"
-    t.integer "code_postal"
     t.integer "departement_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
