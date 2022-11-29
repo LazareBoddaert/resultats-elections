@@ -14,6 +14,10 @@ puts "destroying départements"
 Departement.destroy_all
 puts "destroying communes"
 Commune.destroy_all
+puts "destroying résultats candidats"
+ResultatCandidat.destroy_all
+puts "destroying résultats communes"
+ResultatCommune.destroy_all
 puts "destroying formation politiques"
 FormationPolitique.destroy_all
 puts "destroying candidats"
@@ -107,7 +111,15 @@ Region.create([
   },
   {
     nation_id: 1,
-    nom: "Français de l'étranger" #19
+    nom: 'Mayotte' #18
+  },
+  {
+    nation_id: 1,
+    nom: "Collectivité d'Outre-Mer" #19
+  },
+  {
+    nation_id: 1,
+    nom: "Français de l'étranger" #20
   }
 ])
 
@@ -619,10 +631,35 @@ Departement.create([
     region_id: 18
   },
   {
+    nom: "Nouvelle-Calédonie",
+    numero: "ZN",
+    region_id: 19
+  }, #102
+  {
+    nom: "polynésie française",
+    numero: "ZP",
+    region_id: 19
+  }, #103
+  {
+    nom: "Saint-Pierre-et-Miquelon",
+    numero: "ZS",
+    region_id: 19
+  }, #104
+  {
+    nom: "Wallis-et-Futuna",
+    numero: "ZW",
+    region_id: 19
+  }, #105
+  {
+    nom: "Saint-Martin-Saint-Barthélemy",
+    numero: "ZX",
+    region_id: 19
+  }, #106
+  {
     nom: "Français établis hors de France",
     numero: "ZZ",
-    region_id: 19
-  } #102
+    region_id: 20
+  } #107
 ])
 
 
@@ -657,247 +694,184 @@ puts 'creating communes'
 recuperation_liste_communes(liste_communes_brut)
 
 
-# puts "creating scrutins"
-# Scrutin.create([
-#   #1
-#   {
-#     mandat: "présidentielle",
-#     annee: 2022,
-#     tour: 1,
-#     inscrit_voix: 48_747_876,
-#     abstention_voix: 12_824_169,
-#     abstention_pourcentage_inscrits: 26.31,
-#     votant_voix: 35_923_707,
-#     votant_pourcentage_inscrits: 73.69,
-#     blancs_voix: 543_609,
-#     blancs_pourcentage_inscrits: 1.12,
-#     blancs_pourcentage_votants: 1.51,
-#     nuls_voix: 247_151,
-#     nuls_pourcentage_inscrits: 0.51,
-#     nuls_pourcentage_votants: 0.69,
-#     exprime_voix: 35_132_947,
-#     exprime_pourcentage_inscrits: 72.07,
-#     exprime_pourcentage_votants: 97.80
-#   },
-#   #2
-#   {
-#     mandat: "présidentielle",
-#     annee: 2022,
-#     tour: 2,
-#     inscrit_voix: 48_752_339,
-#     abstention_voix: 13_655_861,
-#     abstention_pourcentage_inscrits: 28.01,
-#     votant_voix: 35_096_478,
-#     votant_pourcentage_inscrits: 71.99,
-#     blancs_voix: 2_233_904,
-#     blancs_pourcentage_inscrits: 4.58,
-#     blancs_pourcentage_votants: 6.37,
-#     nuls_voix: 805_249,
-#     nuls_pourcentage_inscrits: 1.65,
-#     nuls_pourcentage_votants: 2.29,
-#     exprime_voix: 32_057_325,
-#     exprime_pourcentage_inscrits: 65.76,
-#     exprime_pourcentage_votants: 91.34
-#   }
-# ])
-
-# puts 'creating résultats'
-# Resultat.create([
-#   {
-#     score_du_candidat_pourcentage: 58.55,
-#     score_du_candidat_voix: 18_768_639,
-#     scrutin_id: 2,
-#     candidat_id: 3
-#   },
-#   {
-#     score_du_candidat_pourcentage: 41.45,
-#     score_du_candidat_voix: 13_288_686,
-#     scrutin_id: 2,
-#     candidat_id: 5
-#   },
-#   {
-#     score_du_candidat_pourcentage: 0.56,
-#     score_du_candidat_voix: 197_094,
-#     scrutin_id: 1,
-#     candidat_id: 1
-#   },
-#   {
-#     score_du_candidat_pourcentage: 2.28,
-#     score_du_candidat_voix: 802_422,
-#     scrutin_id: 1,
-#     candidat_id: 2
-#   },
-#   {
-#     score_du_candidat_pourcentage: 27.85,
-#     score_du_candidat_voix: 9_783_058,
-#     scrutin_id: 1,
-#     candidat_id: 3
-#   },
-#   {
-#     score_du_candidat_pourcentage: 3.13,
-#     score_du_candidat_voix: 1_101_387,
-#     scrutin_id: 1,
-#     candidat_id: 4
-#   },
-#   {
-#     score_du_candidat_pourcentage: 23.15,
-#     score_du_candidat_voix: 8_133_828,
-#     scrutin_id: 1,
-#     candidat_id: 5
-#   },
-#   {
-#     score_du_candidat_pourcentage: 7.07,
-#     score_du_candidat_voix: 2_485_226,
-#     scrutin_id: 1,
-#     candidat_id: 6
-#   },
-#   {
-#     score_du_candidat_pourcentage: 21.95,
-#     score_du_candidat_voix: 7_712_520,
-#     scrutin_id: 1,
-#     candidat_id: 7
-#   },
-#   {
-#     score_du_candidat_pourcentage: 1.75,
-#     score_du_candidat_voix: 616_478,
-#     scrutin_id: 1,
-#     candidat_id: 8
-#   },
-#   {
-#     score_du_candidat_pourcentage: 4.63,
-#     score_du_candidat_voix: 1_627_853,
-#     scrutin_id: 1,
-#     candidat_id: 9
-#   },
-#   {
-#     score_du_candidat_pourcentage: 4.78,
-#     score_du_candidat_voix: 1_679_001,
-#     scrutin_id: 1,
-#     candidat_id: 10
-#   },
-#   {
-#     score_du_candidat_pourcentage: 0.77,
-#     score_du_candidat_voix: 268_904,
-#     scrutin_id: 1,
-#     candidat_id: 11
-#   },
-#   {
-#     score_du_candidat_pourcentage: 2.06,
-#     score_du_candidat_voix: 725_176,
-#     scrutin_id: 1,
-#     candidat_id: 12
-#   }
-# ])
-
-
 # ------------- ELECTIONS -------------
 
-# def recuperation_donnees_resultats(resultats_brut)
-#   @row_count = 0
-#   @col_count = 0
-#   @count = 0
-#   resultats_brut.sheets.first.rows.each do |row|
-#     @row_count += 1
+def recuperation_donnees_resultats(resultats_brut)
+  @row_count = 0
+  @count = 0
 
-#     if @row_count == 1
-#       # Récupère les infos générales sur le scrutin
-#       row.each do |cell|
-#         @col_count += 1
-#         case @col_count
-#         when 1
-#           mandat_scrutin = cell
-#         when 2
-#           annee_scrutin = cell
-#         when 3
-#           tour_scrutin = cell
-#           @col_count = 0
-#           break
-#         end
-#         @scrutin = Scrutin.create!(annee: annee_scrutin, tour: tour_scrutin, mandat: mandat_scrutin)
-#       end
-#     elsif @row_count == 2
-#       next
-#     else
-#       row.each do |cell|
-#         @col_count += 1
+  resultats_brut.sheets.first.rows.each do |row|
+    @col_count = 0
+    @row_count += 1
 
-#         # Récupère les données générales du vote
-#         case @col_count
-#         when 1
-#           dep_commune = cell
-#         when 2
+    if @row_count == 1
+      # Récupère les infos générales sur le scrutin
+      row.each do |cell|
+        @col_count += 1
+        case @col_count
+        when 1
+          @mandat_scrutin = cell
+        when 2
+          @annee_scrutin = cell
+        when 3
+          @scrutin = Scrutin.create!(mandat: @mandat_scrutin, annee: @annee_scrutin, tour: cell)
+          @col_count = 0
+          break
+        end
+      end
+    elsif @row_count == 2
+      next
+    elsif @row_count > 20 #TEST - `elsif` a supprimer
+      break
+    else
+      @blancs_et_nuls = false
+      row.each do |cell|
+        @col_count += 1
 
-#         when 3
-#           @scrutin.update(inscrit_voix: cell)
-#         when 4
-#           @scrutin.update(abstention_voix: cell)
-#         when 5
-#           @scrutin.update(abstention_pourcentage_inscrits: cell)
-#         when 6
-#           @scrutin.update(votant_voix: cell)
-#         when 7
-#           @scrutin.update(votant_pourcentage_inscrits: cell)
-#         when 8
-#           @scrutin.update(blancs_voix: cell)
-#         when 9
-#           @scrutin.update(blancs_pourcentage_inscrits: cell)
-#         when 10
-#           @scrutin.update(blancs_pourcentage_votants: cell)
-#         when 11
-#           @scrutin.update(nuls_voix: cell)
-#         when 12
-#           @scrutin.update(nuls_pourcentage_inscrits: cell)
-#         when 13
-#           @scrutin.update(nuls_pourcentage_votants: cell)
-#         when 14
-#           @scrutin.update(exprime_voix: cell)
-#         when 15
-#           @scrutin.update(exprime_pourcentage_inscrits: cell)
-#         when 16
-#           @scrutin.update(exprime_pourcentage_votants: cell)
-#         end
+        # Récupère les données générales du vote
+        case @col_count
+        when 1
+          if Departement.find_by(nom: cell).nil?
+            @dep_commune = Departement.find(102)
+          else
+            @dep_commune = Departement.find_by(nom: cell)
+          end
+        when 2
+          if Commune.find_by(nom: cell).nil?
+            @commune = Commune.create!(nom: cell, departement_id: @dep_commune.id)
+          else
+            @commune = Commune.find_by(nom: cell)
+          end
+        when 3
+          @inscrit_nombre = cell
+        when 4
+          @abstention_nombre = cell
+        when 5
+          @abstention_pourcentage_inscrit = cell
+        when 6
+          @votant_nombre = cell
+        when 7
+          @votant_pourcentage_inscrit = cell
+        when 8
+          if cell.nil?
+            @blancs_et_nuls = true
+            @blancs_nombre = nil
+          else
+            @blancs_nombre = cell
+          end
+        when 9
+          if cell.nil?
+            @blancs_pourcentage_inscrit = nil
+          else
+            @blancs_pourcentage_inscrit = cell
+          end
+        when 10
+          if cell.nil?
+            @blancs_pourcentage_votant = nil
+          else
+            @blancs_pourcentage_votant = cell
+          end
+        when 11
+          if @blancs_et_nuls == true
+            @blancs_nuls_nombre = cell
+            @nuls_nombre = nil
+          else
+            @nuls_nombre = cell
+            @blancs_nuls_nombre = nil
+          end
+        when 12
+          if @blancs_et_nuls == true
+            @blancs_nuls_pourcentage_inscrit = cell
+            @nuls_pourcentage_inscrit = nil
+          else
+            @nuls_pourcentage_inscrit = cell
+            @blancs_nuls_pourcentage_inscrit = nil
+          end
+        when 13
+          if @blancs_et_nuls == true
+            @blancs_nuls_pourcentage_votant = cell
+            @nuls_pourcentage_votant = nil
+          else
+            @nuls_pourcentage_votant = cell
+            @blancs_nuls_pourcentage_votant = nil
+          end
+        when 14
+          @exprime_nombre = cell
+        when 15
+          @exprime_pourcentage_inscrit = cell
+        when 16
+          ResultatCommune.create!(
+            commune_id: @commune.id,
+            scrutin_id: @scrutin.id,
+            inscrit_nombre: @inscrit_nombre,
+            abstention_nombre: @abstention_nombre,
+            abstention_pourcentage_inscrit: @abstention_pourcentage_inscrit,
+            votant_nombre: @votant_nombre,
+            votant_pourcentage_inscrit: @votant_pourcentage_inscrit,
+            blancs_nombre: @blancs_nombre,
+            blancs_pourcentage_inscrit: @blancs_pourcentage_inscrit,
+            blancs_pourcentage_votant: @blancs_pourcentage_votant,
+            nuls_nombre: @nuls_nombre,
+            nuls_pourcentage_inscrit: @nuls_pourcentage_inscrit,
+            nuls_pourcentage_votant: @nuls_pourcentage_votant,
+            blancs_nuls_nombre: @blancs_nuls_nombre,
+            blancs_nuls_pourcentage_inscrit: @blancs_nuls_pourcentage_inscrit,
+            blancs_nuls_pourcentage_votant: @blancs_nuls_pourcentage_votant,
+            exprime_nombre: @exprime_nombre,
+            exprime_pourcentage_inscrit: @exprime_pourcentage_inscrit,
+            exprime_pourcentage_votant: cell
+          )
+        end
 
-#         # Récupère les scores des candidats
-#         if @col_count > 16
-#           @count += 1
-#           case @count
-#           when 2
-#             @nom_candidat = cell.capitalize
-#           when 4
-#             nom_complet_candidat = "#{cell.capitalize} #{@nom_candidat}"
-#             unless Candidat.find_by(nom: nom_complet_candidat)
-#               Candidat.create!(nom: nom_complet_candidat)
-#             end
-#             @scrutin_id = scrutin.id
-#             @candidat = Candidat.find_by(nom: nom_complet_candidat)
-#             @candidat_id = @candidat.id
-#             Resultat.create!(scrutin_id: @scrutin_id, candidat_id: @candidat_id)
-#             @resultat_candidat = Resultat.last
-#             @resultat_candidat.update(candidat_id: @candidat_id)
-#           when 5
-#             @resultat_candidat.update(score_du_candidat_voix: cell)
-#           when 6
-#             @resultat_candidat.update(score_candidat_pourcentage_inscrits: cell)
-#           when 7
-#             @resultat_candidat.update(score_candidat_pourcentage_exprimes: cell)
-#             @count = 0
-#           end
-#         end
-#       end
-#     end
-#   end
-# end
+        # Récupère les scores des candidats
+        if @col_count > 16
+          @count += 1
+          case @count
+          when 1
+            if cell.nil?
+              @count = 0
+              break
+            else
+              next
+            end
+          when 2
+            @nom_candidat = cell.capitalize
+          when 3
+            nom_complet_candidat = "#{cell.capitalize} #{@nom_candidat}"
+            if Candidat.find_by(nom: nom_complet_candidat).nil?
+              @candidat = Candidat.create!(nom: nom_complet_candidat)
+            else
+              @candidat = Candidat.find_by(nom: nom_complet_candidat)
+            end
+          when 4
+            @score_candidat_nombre = cell
+          when 5
+            @score_candidat_pourcentage_inscrit = cell
+          when 6
+            ResultatCandidat.create!(
+              scrutin_id: @scrutin.id,
+              candidat_id: @candidat.id,
+              score_candidat_nombre: @score_candidat_nombre,
+              score_candidat_pourcentage_inscrit: @score_candidat_pourcentage_inscrit,
+              score_candidat_pourcentage_exprime: cell
+            )
+            @count = 0
+          end
+        end
+      end
+    end
+  end
+end
 
+puts 'Creating Scrutin'
 # ------- PRESIDENTIELLES -------
 # ------ 2022 ------
 # ----- T1 -----
-
+# puts 'creating pdt 2022 T1'
 # resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
-
-# puts 'Creating Scrutin'
-# scrutin = Scrutin.create!(annee: 2022, tour: 1, mandat: "présidentielle")
-
-# recuperation_donnees_resultats(resultats_brut, scrutin)
-
+# recuperation_donnees_resultats(resultats_brut)
 
 # ----- T2 -----
+# puts 'creating pdt 2022 T2'
+# resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t2/presidentielle-2022-T2-par-commune.xlsx'
+# recuperation_donnees_resultats(resultats_brut)

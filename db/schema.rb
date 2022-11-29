@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_28_154845) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_28_164115) do
   create_table "candidats", force: :cascade do |t|
     t.string "nom"
     t.datetime "created_at", null: false
@@ -58,11 +58,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_28_154845) do
   end
 
   create_table "resultat_candidats", force: :cascade do |t|
-    t.float "score_candidat"
     t.integer "scrutin_id", null: false
     t.integer "candidat_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score_candidat_nombre"
+    t.float "score_candidat_pourcentage_inscrit"
+    t.float "score_candidat_pourcentage_exprime"
     t.index ["candidat_id"], name: "index_resultat_candidats_on_candidat_id"
     t.index ["scrutin_id"], name: "index_resultat_candidats_on_scrutin_id"
   end
