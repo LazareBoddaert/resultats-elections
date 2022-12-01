@@ -815,8 +815,17 @@ def formater_nom_departement(departement_cell)
 end
 
 def formater_nom_commune(commune_cell, numero_departement)
-  nom_commune = I18n.transliterate(commune_cell).downcase.gsub(/\W/, "-")
-  @nom_commune_formate = "#{nom_commune}(#{numero_departement})"
+  @commune_cell = commune_cell
+  if commune_cell =~ /.*(\(l.\)|\(les\))$/i
+    nom_array = @commune_cell.split
+    nom_array.pop
+    pronom = @commune_cell.split.last.chop.sub("(", "").capitalize
+    @commune_cell = nom_array.unshift(pronom).join(" ")
+    @commune_cell.sub!(" ", "") if pronom == "L'"
+  end
+  @nom_commune = @commune_cell.capitalize
+  nom_commune_unformat = I18n.transliterate(@commune_cell).downcase.gsub(/\W/, "-")
+  @nom_commune_formate = "#{nom_commune_unformat}(#{numero_departement})"
 end
 
 # Récupère les infos générales sur le scrutin
@@ -861,17 +870,19 @@ def recuperation_donnees_resultats(resultats_brut)
           formater_nom_departement(cell)
           if Departement.find_by(nom_formate: @nom_departement_formate).nil?
             case @nom_departement_formate
-            when /(nouvelle caledonie)/
+            when /(corse-sud)/
+              @dep_commune = Departement.find(20) # Corse du Sud
+            when /(nouvelle-caledonie)/
               @dep_commune = Departement.find(102) # Nouvelle-Calédonie
-            when /(polynesie francaise)/
+            when /(polynesie-francaise)/
               @dep_commune = Departement.find(103) # Polynésie Française
-            when /(saint pierre et miquelon)|(saint pierre)|(miquelon)/
+            when /(saint-pierre-et-miquelon)|(saint-pierre)|(miquelon)/
               @dep_commune = Departement.find(104) # Saint-Pierre-et-Miquelon
-            when /(wallis et futuna)|(wallis)|(futuna)/
+            when /(wallis-futuna)|(wallis)|(futuna)/
               @dep_commune = Departement.find(105) # Wallis-et-Futuna
-            when /(saint martin saint barthelemy)|(saint martin)|(saint barthelemy)/
+            when /(saint-martin-saint-barthelemy)|(saint-martin)|(saint-barthelemy)/
               @dep_commune = Departement.find(106) # Saint-Martin/Saint-Barthélemy
-            when /(hors de france)$|(etranger)$/
+            when /(hors-de-france)$|(etranger)$/
               @dep_commune = Departement.find(107) # Français établis hors de France
             end
           else
@@ -881,9 +892,9 @@ def recuperation_donnees_resultats(resultats_brut)
         when 2
           formater_nom_commune(cell, @dep_commune.numero)
           if Commune.find_by(nom_formate: @nom_commune_formate).nil?
-            p "----- Commune #{cell} non trouvée. Ligne #{@row_count} -----"
-            @commune = Commune.create!(nom: cell.capitalize, nom_formate: @nom_commune_formate, departement_id: @dep_commune.id)
-            p "----- Commune créée. Ligne #{@row_count} -----"
+            p "----- Commune #{cell} non trouvée | Ligne #{@row_count} -----"
+            @commune = Commune.create!(nom: @nom_commune, nom_formate: @nom_commune_formate, departement_id: @dep_commune.id)
+            p "----- Commune #{@commune.nom} créée -----"
           else
             @commune = Commune.find_by(nom_formate: @nom_commune_formate)
           end
@@ -1015,9 +1026,9 @@ puts 'Creating Scrutin'
 # ------- PRESIDENTIELLES -------
 # ------ 2022 ------
 # ----- T1 -----
-puts 'creating pdt 2022 T1'
-resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
-recuperation_donnees_resultats(resultats_brut)
+# puts 'creating pdt 2022 T1'
+# resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
+# recuperation_donnees_resultats(resultats_brut)
 
 # ----- T2 -----
 # puts 'creating pdt 2022 T2'
@@ -1031,83 +1042,45 @@ recuperation_donnees_resultats(resultats_brut)
 # ---------- TEST ----------
 
 # p "---TEST---"
-# def test(resultats_test)
-#   @row_count = 0
-#   @count = 0
 
-#   resultats_test.sheets.first.rows.each do |row|
-#     @col_count = 0
-#     @row_count += 1
-
-#     if @row_count == 1
-#       # Récupère les infos générales sur le scrutin
-#       row.each do |cell|
-#         @col_count += 1
-#         case @col_count
-#         when 1
-#           @mandat_scrutin = cell
-#         when 2
-#           @annee_scrutin = cell
-#         when 3
-#           @scrutin = Scrutin.create!(mandat: @mandat_scrutin, annee: @annee_scrutin, tour: cell)
-#           @col_count = 0
-#           break
-#         end
-#       end
-#     elsif @row_count == 2
-#       next
-#     else
-#       @blancs_et_nuls = false
-#       row.each do |cell|
-#         @col_count += 1
-
-#         # Récupère les données générales du vote
-#         case @col_count
-#         when 1
-#           p "cell: #{cell}"
-#           if Departement.find_by(nom: cell.capitalize).nil?
-#             @dep_nom = I18n.transliterate(cell).downcase.gsub(/\W/, " ") # Retire les accents
-#             case @dep_nom
-#             when /(nouvelle caledonie)/
-#               @dep_commune = Departement.find(102) # Nouvelle-Calédonie
-#               p @dep_commune.nom
-#             when /(polynesie francaise)/
-#               @dep_commune = Departement.find(103) # Polynésie Française
-#               p @dep_commune.nom
-#             when /(saint pierre et miquelon)|(saint pierre)|(miquelon)/
-#               @dep_commune = Departement.find(104) # Saint-Pierre-et-Miquelon
-#               p @dep_commune.nom
-#             when /(wallis et futuna)|(wallis)|(futuna)/
-#               @dep_commune = Departement.find(105) # Wallis-et-Futuna
-#               p @dep_commune.nom
-#             when /(saint martin saint barthelemy)|(saint martin)|(saint barthelemy)/
-#               @dep_commune = Departement.find(106) # Saint-Martin/Saint-Barthélemy
-#               p @dep_commune.nom
-#             when /(hors de france)$|(etranger)$/
-#               @dep_commune = Departement.find(107) # Français établis hors de France
-#               p @dep_commune.nom
-#             end
-#           else
-#             @dep_commune = Departement.find_by(nom: cell.capitalize)
-#             p "dep trouvé: #{@dep_commune.nom}"
-#           end
-#           p "------------------ Département #{@dep_nom} non trouvé" if @dep_commune.nil?
-#         when 2
-#           if Commune.find_by(nom: cell).nil?
-#             @commune = Commune.create!(nom: cell, departement_id: @dep_commune.id)
-#           else
-#             @commune = Commune.find_by(nom: cell)
-#           end
-#         when 3
-#           @col_count = 0
-#           break
-#         end
-#       end
-#     end
-#   end
-# end
-
-# resultats_test = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/TEST-resultats-elections.xlsx'
-# recuperation_donnees_resultats(resultats_test)
+resultats_test = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/TEST-resultats-elections.xlsx'
+recuperation_donnees_resultats(resultats_test)
 
 # ---------- FIN TEST ----------
+
+
+# ---------- PROBLEME NOM COMMUNE ----------
+#
+# Pianottoli-Caldarello // Pianotolli-Caldarello // creuse
+# La Mazière-aux-Bons-Hommes // La Mazière-aux-Bonshommes // creuse
+# Saint-Julien-Innocence-Eulalie // Saint-Julien-Innocence Eulalie // Dordogne
+# La Bâtie-des-Fonds // La Bâtie-des-Fonts // drôme
+# Moutoux // Moutoux (Le) // jura
+# Rix // Rix-Trebief // jura
+# Larrivière-Saint-Savin // Larrivière // Landes
+# Courcelles-le-Roi // Courcelles // Loiret
+# Ferrières-en-Gâtinais // Ferrières // Loiret
+# Breuil-sur-Vesle // Breuil (!! pas Le Breuil !!) // Marne
+# Arrancy-sur-Crusnes // Arrancy-sur-Crusne // Meurthe-et-Moselle
+# Cléry-le-Grand // Cléry-Grand // Meuse
+# Cléry-le-Petit // Cléry-Petit // Meuse
+# Ile-d'Houat // Ile- d'Houat // Morbihan
+# Saint-Loup-des-Bois // Saint-Loup // Nièvre
+# Aix-en-Pévèle // Aix // Nord
+# Braisnes-sur-Aronde // Braisnes // Oise
+# Pronville-en-Artois // Pronville // Pas-de-Calais
+# Saint-Girons-en-Béarn // Saint-Girons // Pyrénées-Atlantiques
+# Feilluns // Felluns // Pyrénées-Orientales
+# Chessy // Chessy-les-Mines // Rhône
+# Le Rousset-Marizy // Le Rousset - Marizy // Saône-et-Loire
+# Amné // Amné-en-Champagne // Sarthe
+# Douillet // Douillet-le-Joly // Sarthe
+# Fillé // Fillé-sur-Sarthe // Sarthe
+# Rouez // Rouez-en-Champagne // Sarthe
+# Saint Paterne - Le Chevain // Saint Paterne-Le Chevain // Sarthe
+# Fraissines // Frayssines // Tarn
+# Étaule // Etaules // Yonne
+# Limours // Limours en Hurepoix // Essonne
+# Roinville // Roinville-sous-Dourdan // Essonne
+# Périgny // Périgny-sur-Yerres // Val de Marne
+# Hérouville-en-Vexin // Hérouville // Val d'Oise
