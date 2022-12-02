@@ -1026,16 +1026,25 @@ puts 'Creating Scrutin'
 # ------- PRESIDENTIELLES -------
 # ------ 2022 ------
 # ----- T1 -----
-# puts 'creating pdt 2022 T1'
-# resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
-# recuperation_donnees_resultats(resultats_brut)
+puts 'creating pdt 2022 T1'
+resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t1/presidentielle-2022-T1-par-commune.xlsx'
+recuperation_donnees_resultats(resultats_brut)
 
 # ----- T2 -----
 # puts 'creating pdt 2022 T2'
 # resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t2/presidentielle-2022-T2-par-commune.xlsx'
 # recuperation_donnees_resultats(resultats_brut)
 
+# ------ 2017 ------
+# ----- T1 -----
+puts 'creating pdt 2017 T1'
+resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2017/t1/pdt-2017-t1-communes.xlsx'
+recuperation_donnees_resultats(resultats_brut)
 
+# ----- T2 -----
+# puts 'creating pdt 2017 T2'
+# resultats_brut = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/presidentielles/2022/t2/presidentielle-2022-T2-par-commune.xlsx'
+# recuperation_donnees_resultats(resultats_brut)
 
 
 
@@ -1043,8 +1052,8 @@ puts 'Creating Scrutin'
 
 # p "---TEST---"
 
-resultats_test = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/TEST-resultats-elections.xlsx'
-recuperation_donnees_resultats(resultats_test)
+# resultats_test = SimpleXlsxReader.open '/Users/lazareboddaert/code/LazareBoddaert/projets-perso/resultats-elections-data/TEST-resultats-elections.xlsx'
+# recuperation_donnees_resultats(resultats_test)
 
 # ---------- FIN TEST ----------
 
