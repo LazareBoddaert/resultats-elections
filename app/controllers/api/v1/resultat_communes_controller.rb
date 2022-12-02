@@ -39,3 +39,4 @@ class Api::V1::ResultatCommunesController < ApplicationController
                                              :exprime_pourcentage_votant)
   end
 end
+
